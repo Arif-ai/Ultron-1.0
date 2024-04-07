@@ -74,5 +74,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    // Clearing functionality for input fields
+    imageUpload.addEventListener('change', () => {
+        // Check if a file is selected in imageUpload and clear cameraInput
+        if(imageUpload.files.length > 0) {
+            cameraInput.value = '';
+        }
+    });
+
+    cameraInput.addEventListener('change', () => {
+        // Check if a file is selected in cameraInput and clear imageUpload
+        if(cameraInput.files.length > 0) {
+            imageUpload.value = '';
+        }
+    });
+
     maybeShowApiKeyBanner(API_KEY);
 });
