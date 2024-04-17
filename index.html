@@ -1,33 +1,35 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Baking with the Gemini API</title>
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
   <main>
     <h1>Baking with the Gemini API</h1>
-    <form>
+    <form id="imageForm">
       <div class="image-picker">
-        <!-- Option for uploading images from file manager -->
         <label for="imageUpload">Upload images</label>
         <input type="file" id="imageUpload" name="chosen-images" accept="image/*" multiple>
       </div>
       <div class="image-picker">
-        <!-- Separate option for capturing images directly with the camera -->
         <label for="cameraInput">Take a picture</label>
         <input type="file" id="cameraInput" accept="image/*" capture="environment">
       </div>
       <div class="prompt-box">
-        <label>
-          <input name="prompt" placeholder="Enter instructions here" type="text" value="Provide a recipe for the baked goods in the image">
-        </label>
+        <input name="prompt" placeholder="Enter instructions here" type="text" value="Provide a recipe for the baked goods in the image">
         <button type="submit">Go</button>
       </div>
     </form>
     <p class="output">(Results will appear here)</p>
+    <!-- Extra ingredients input which will be shown after initial response -->
+    <div id="extraIngredientsDiv" style="display:none;">
+      <label for="extraIngredients">Add more ingredients:</label>
+      <input type="text" id="extraIngredients" placeholder="e.g., cinnamon, nutmeg">
+      <button id="updateButton">Update Recipe</button>
+    </div>
   </main>
   <script type="module" src="/main.js"></script>
 </body>
