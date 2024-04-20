@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const loader = document.getElementById('loader');
   const notfound = document.getElementById('notfound');
   const startgenerate = document.getElementById('startgenerate');
+  const uploadedImage = document.getElementById('uploadedImage'); // Added line
 
   const edit = document.querySelector('button[name="edit"]');
   const regenerate = document.querySelector('button[name="regenerate"]');
@@ -23,38 +24,29 @@ document.addEventListener('DOMContentLoaded', () => {
   const copy = document.querySelector('button[name="copy"]');
   const extraIngredientsDiv = document.getElementById('extraIngredientsDiv');
 
-  edit.addEventListener('click', function() {
+  edit.addEventListener('click', function () {
     if (answer.hasAttribute('readonly')) {
       answer.removeAttribute('readonly')
     } else {
       answer.setAttribute('readonly', 'readonly');
     }
   })
-  
-  copy.addEventListener('click', function() {
-     // Select the text field
-     var copyText = output.innerText;
-   
-      // Copy the text inside the text field
-     navigator.clipboard.writeText(copyText);
-   
-     // Alert the copied text
-     alert("Copied the text: " + copyText);
-  })
-  
-  
-  
-  regenerate.addEventListener('click', function() {
-    output.innerHTML = '';
-    loader.style.display = 'block'
 
+  copy.addEventListener('click', function () {
+    var copyText = output.innerText;
+    navigator.clipboard.writeText(copyText);
+    alert("Copied the text: " + copyText);
   })
-  
+
+  regenerate.addEventListener('click', function () {
+    output.innerHTML = '';
+    loader.style.display = 'block';
+  })
 
   async function handleSubmit(file) {
-    loader.style.display = 'block'
+    loader.style.display = 'block';
     notfound.setAttribute('hidden', 'hidden');
-    extraIngredientsDiv.style.display = 'none';
+    extraIngredientsDiv.style.display = 'flex';
     startgenerate.setAttribute('hidden', 'hidden');
 
     try {
@@ -92,15 +84,12 @@ document.addEventListener('DOMContentLoaded', () => {
           buffer.push(response.text());
           output.innerHTML = md.render(buffer.join(''));
         }
-
       };
 
       reader.readAsDataURL(file);
     } catch (e) {
       console.error(e);
-
       output.innerHTML += '<hr>' + e;
-
     }
   }
 
@@ -109,14 +98,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const imageFile = imageUpload.files[0] || cameraInput.files[0];
     if (imageFile) {
-      loader.style.display = 'none'
+      loader.style.display = 'none';
       extraIngredientsDiv.style.display = 'block';
+      uploadedImage.style.display = 'none'; // Hide uploaded image when submitting new image
 
       handleSubmit(imageFile);
-      edit.removeAttribute('hidden')
-      regenerate.removeAttribute('hidden')
-      copy.removeAttribute('hidden')
-      submit.setAttribute('hidden', 'hidden')
+      edit.removeAttribute('hidden');
+      regenerate.removeAttribute('hidden');
+      copy.removeAttribute('hidden');
+      submit.setAttribute('hidden', 'hidden');
     } else {
       notfound.removeAttribute('hidden');
       startgenerate.setAttribute('hidden', 'hidden');
@@ -136,25 +126,59 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   maybeShowApiKeyBanner(API_KEY);
-  // Dark mode toggle
+
   const darkModeToggle = document.getElementById('dark-mode-toggle');
   const body = document.body;
+
   darkModeToggle.addEventListener('click', () => {
     body.classList.toggle('dark-mode');
+    darkModeToggle.classList.toggle('rotate'); // Toggle rotate class
+  });
+
+
+  const typingText = document.getElementById('typing-text');
+  const prefix = "Hello!\n"; // Define the fixed prefix with a newline
+  const suffix = "How can I help you today?"; // Define the dynamic suffix
+  let index = 0;
+  let direction = 1; // 1 for forward, -1 for reverse
+
+  function type() {
+    if (direction === 1) {
+      typingText.textContent = prefix + suffix.substring(0, index);
+      index++;
+      if (index === suffix.length + 1) {
+        direction = -1; // Change direction to reverse
+      }
+    } else {
+      typingText.textContent = prefix + suffix.substring(0, index);
+      index--;
+      if (index === 0) {
+        direction = 1; // Change direction to forward
+      }
+    }
+  }
+
+  setInterval(type, 100); // Adjust typing speed (milliseconds) as needed
+
+  // Handle image upload change event to display the uploaded image
+  imageUpload.addEventListener('change', () => {
+    const file = imageUpload.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        uploadedImage.src = e.target.result;
+        uploadedImage.style.display = 'block'; // Show uploaded image
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  // After handling the image upload, for example, in handleSubmit function
+  document.getElementById('uploadedImage').style.display = 'block';
+
+
+  // Handle camera input change event to hide the uploaded image
+  cameraInput.addEventListener('change', () => {
+    uploadedImage.style.display = 'none'; // Hide uploaded image when camera input is used
   });
 });
-
-const typingText = document.getElementById('typing-text');
-const text = "Hey, Ultron here!";
-let index = 0;
-
-function type() {
-  typingText.textContent += text[index];
-  index++;
-  if (index === text.length) {
-    index = 0;
-    typingText.textContent = '';
-  }
-}
-
-setInterval(type, 200); // Adjust typing speed (milliseconds) as needed
