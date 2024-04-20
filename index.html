@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,6 +10,7 @@
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Gemini:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
+<link rel="icon" type="image/x-icon" href="/public/ultron.jpeg">
 </head>
 
 <body>
@@ -16,32 +18,31 @@
     <img src="/public/ultron.jpeg" id="dark-mode-toggle">
     <h1 class="text-center mb-5"><span id="typing-text"></span></h1>
     <form id="imageForm">
-      <div class="row mb-3">
-        <div class="col">
-          <label for="imageUpload" class="form-label">Upload Images</label>
-          <input type="file" id="imageUpload" name="chosen-images" accept="image/*" multiple class="form-control">
-        </div>
-        <div class="col">
-          <label for="cameraInput" class="form-label">Take a Picture</label>
-          <input type="file" id="cameraInput" accept="image/*" capture="environment" class="form-control">
-        </div>
-      </div>
-      <div class="mb-3">
-        <label for="prompt" class="form-label">Instructions</label>
-        <input name="prompt" placeholder="Enter instructions here" type="text" class="form-control"
-          value="Provide a recipe for the baked goods in the image">
-      </div>
-      <div class="d-grid gap-2">
 
-        <button id="Go" name="submit" type="submit" class="btn btn-primary">▶</button>
-        <button id="edit" name='edit' type="button" hidden>✏️</button>
-        <button id="copy" name='copy' type="button" hidden>📋</button>
-        <button id="regenerate" name='regenerate' type="button" hidden>🔁</button>
+<div class="row mb-3">
+        <label for="prompt" class="form-label">Let me cook!</label>
+        <div class="input-group">
+          <input name="prompt" placeholder="Enter instructions here" type="text" class="form-control"
+            value="Provide a recipe from the image, the name of the recipe you have provided, the nutritional facts of the recipe and the meal size (estimation of how many number of people it can cater to)" readonly>
+          <label class="input-group-text" for="cameraInput"><img src="/public/camera.png" width="20" height="20"></label>
+          <input type="file" id="cameraInput" accept="image/*" capture="environment" class="form-control" hidden>
+          <label class="input-group-text" for="imageUpload"><img src="/public/upload.png" width="20" height="20"></label>
+          <input type="file" id="imageUpload" name="chosen-images" accept="image/*" multiple class="form-control" hidden>
+        </div>
       </div>
+
+<div class="row mb-3">
+        <button id="Go" name="submit" type="submit" class="btn btn-primary w-100">▶ Generate</button>
+        <button id="edit" name='edit' type="button" hidden class="btn btn-primary w-100">✏️ Edit</button>
+        <button id="copy" name='copy' type="button" hidden class="btn btn-primary w-100">📋 Copy</button>
+        <button id="regenerate" name='regenerate' type="submit" hidden class="btn btn-primary w-100">🔁 Regenerate</button>
+      </div>
+
       <div class="output my-4 text-center">
         <p id="answer"></p>
-        <div id='loader' class="loader" hidden></div>
-        <img id="notfound" class="image-float" src="public/notfound.jpeg" width="500" height="500" hidden>
+        <div id='loader' class="loader" style="display:none;"></div>
+        <img id="startgenerate" class="image-float" src="public/startgenerate.png" width="500" height="500">
+        <img id="notfound" class="image-float" src="public/notfound.png" width="500" height="500" hidden>
       </div>
     </form>
 
@@ -50,7 +51,8 @@
     <div id="extraIngredientsDiv" style="display:none;">
       <label for="extraIngredients" class="form-label">Add More Ingredients:</label>
       <input type="text" id="extraIngredients" placeholder="e.g., cinnamon, nutmeg" class="form-control mb-3">
-      <button id="updateButton" class="btn btn-primary">Update Recipe</button>
+      <button id="updateButton" class="btn btn-primary">🍳 Update Recipe</button>
+      <div class="tenor-gif-embed" data-postid="17654914" data-share-method="host" data-aspect-ratio="1.79775" data-width="100%"><a href="https://tenor.com/view/kiss-make-out-gay-tongue-kiss-french-kiss-gif-17654914">Kiss Make Out GIF</a>from <a href="https://tenor.com/search/kiss-gifs">Kiss GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
   </main>
   <script type="module" src="/main.js"></script>
 </body>

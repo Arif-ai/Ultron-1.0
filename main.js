@@ -14,13 +14,15 @@ document.addEventListener('DOMContentLoaded', () => {
   let cameraInput = document.getElementById('cameraInput');
   const loader = document.getElementById('loader');
   const notfound = document.getElementById('notfound');
+  const startgenerate = document.getElementById('startgenerate');
 
   const edit = document.querySelector('button[name="edit"]');
   const regenerate = document.querySelector('button[name="regenerate"]');
   const submit = document.querySelector('button[name="submit"]');
   const answer = document.querySelector('input[name="answer"]');
   const copy = document.querySelector('button[name="copy"]');
-  
+  const extraIngredientsDiv = document.getElementById('extraIngredientsDiv');
+
   edit.addEventListener('click', function() {
     if (answer.hasAttribute('readonly')) {
       answer.removeAttribute('readonly')
@@ -44,18 +46,16 @@ document.addEventListener('DOMContentLoaded', () => {
   
   regenerate.addEventListener('click', function() {
     output.innerHTML = '';
-    edit.setAttribute('hidden', 'hidden');
-    regenerate.setAttribute('hidden', 'hidden');
-    copy.setAttribute('hidden', 'hidden');
-    submit.removeAttribute('hidden');
-  
+    loader.style.display = 'block'
+
   })
   
 
   async function handleSubmit(file) {
-    output.textContent = 'Generating...';
+    loader.style.display = 'block'
     notfound.setAttribute('hidden', 'hidden');
-
+    extraIngredientsDiv.style.display = 'none';
+    startgenerate.setAttribute('hidden', 'hidden');
 
     try {
       const reader = new FileReader();
@@ -109,16 +109,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const imageFile = imageUpload.files[0] || cameraInput.files[0];
     if (imageFile) {
+      loader.style.display = 'none'
+      extraIngredientsDiv.style.display = 'block';
 
       handleSubmit(imageFile);
-      loader.removeAttribute('hidden')
       edit.removeAttribute('hidden')
       regenerate.removeAttribute('hidden')
       copy.removeAttribute('hidden')
       submit.setAttribute('hidden', 'hidden')
-
     } else {
       notfound.removeAttribute('hidden');
+      startgenerate.setAttribute('hidden', 'hidden');
     }
   };
 

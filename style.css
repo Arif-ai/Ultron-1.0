@@ -1,6 +1,6 @@
 body {
   margin: 24px;
-  font-family: "Helvetica Neue";
+  font-family: "Roboto","san-serif";
   /* Use Gemini font with fallback to sans-serif */
   --accent-color: #076EFF;
   color: #202124;
@@ -21,6 +21,14 @@ main {
   margin: 0 auto;
   border-radius: 50px;
   background-color: #ffffff;
+}
+div{
+    margin: 0 auto;
+    border-radius: 10px;
+    background-color: #f5f5f5;
+    margin: 0 auto 10px auto;
+    gap: 10px;
+    padding: 5px;
 }
 
 .api-key-banner {
@@ -128,13 +136,11 @@ form {
 }
 
 label {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  gap: 8px;
-  font-size: var(--font-size);
-  /* Use variable for font size */
-  line-height: 1.5;
+  font-size: 24px;
+  font-weight: 900;
+  background: linear-gradient(to right, #ff0080, #8000ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 input,
@@ -176,7 +182,7 @@ button:hover {
   font-size: var(--font-size);
   /* Use variable for font size */
   border: none;
-  border-radius: 50px;
+  border-radius: 10px;
   padding: 12px 16px;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
@@ -286,7 +292,6 @@ h1:hover {
   caret-color: transparent;
   /* Hide the text cursor */
     font-family: 'Helvetica Neue';
-    font-style: oblique;
       /* Use monospace font */
       display: inline-block;
       /* Ensure the container only occupies the necessary width */
