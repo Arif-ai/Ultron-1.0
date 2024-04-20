@@ -1,18 +1,48 @@
 body {
   margin: 24px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  --accent-color: #076EFF;
+  font-family: "Roboto", "san-serif";
+  /* Use Gemini font with fallback to sans-serif */
+  --accent-color: #8000ff;
   color: #202124;
+  --font-size: 16px;
+  /* Default font size */
+  background-color: #efefef;
 }
 
-main,
-.api-key-banner {
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+main {
   width: 100%;
-  padding: 24px;
+  padding: 400px;
   max-width: 460px;
   margin: 0 auto;
-  border-radius: 20px;
+  border-radius: 50px;
+  background-color: #ffffff;
+}
+
+#float {
+  /* Your CSS styles for the #float div go here */
+background-color: #ffffff;
+}
+.dark-mode #float{
+  background-color: #131314;
+}
+
+#float img.image-float {
+  /* Your CSS styles for the images inside the #float div with the class image-float go here */
+}
+
+div {
+  margin: 0 auto;
+  border-radius: 10px;
+  background-color: #f5f5f5;
+  margin: 0 auto 10px auto;
+  gap: 10px;
+  padding: 5px;
 }
 
 .api-key-banner {
@@ -29,29 +59,29 @@ main,
   outline-color: var(--accent-color);
 }
 
-main {
-  background-color: #fff;
-}
-
 h1 {
-  display: flex;
+  display: block;
   align-items: center;
   gap: 8px;
   margin: 0 auto;
   font-size: 24px;
+  line-height: 1.5;
+  transition: transform 0.3s ease;
+  /* Add transition to the h1 element */
 }
 
 h1::before {
   content: '';
-  display: inline-block;
-  background: url(gemini.png);
+  display: block;
   width: 40px;
   height: 40px;
+  border-radius: 50px;
   background-size: cover;
 }
 
 form {
   margin: 0;
+  margin-top: 32px;
 }
 
 .image-picker {
@@ -63,7 +93,7 @@ form {
 
 .image-choice {
   position: relative;
-  border-radius: 8px;
+  border-radius: 50px;
   overflow: hidden;
   cursor: pointer;
 }
@@ -91,7 +121,7 @@ form {
   position: absolute;
   pointer-events: none;
   inset: 0;
-  border-radius: 8px;
+  border-radius: 50px;
   box-shadow:
     0 0 0 2px var(--accent-color) inset,
     0 0 0 4px #fff inset;
@@ -116,23 +146,41 @@ form {
   display: flex;
   gap: 8px;
   align-items: flex-end;
+  padding: 16px;
 }
 
 label {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  gap: 8px;
-  font-size: 12px;
+  font-size: 24px;
+  font-weight: 900;
+  background: linear-gradient(to right, #ff0080, #8000ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: move 1s linear infinite;
+  background-size: 200% auto;
+  /* Ensure the background size is defined */
+}
+
+@keyframes move {
+  0% {
+    background-position: 0 0;
+    /* Start position */
+  }
+
+  100% {
+    background-position: 100% 0;
+    /* End position */
+  }
 }
 
 input,
 button {
   border: 1px solid #ddd;
-  border-radius: 8px;
+  border-radius: 50px;
   padding: 12px 16px;
   font-family: unset;
-  font-size: 16px;
+  font-size: var(--font-size);
+  /* Use variable for font size */
+  transition: background-color 0.3s, color 0.3s;
 }
 
 button {
@@ -144,11 +192,207 @@ button {
   opacity: 1;
 }
 
+
 button:focus-visible {
   outline: 2px solid white;
   outline-offset: -4px;
 }
 
 button:hover {
-  opacity: 0.95;
+  opacity: 0.9;
+  background-color: #ff0080;
+  color: #fff;
+}
+
+/* Added button styles */
+.btn {
+  display: inline-block;
+  background-color: var(--accent-color);
+  color: white;
+  font-size: var(--font-size);
+  /* Use variable for font size */
+  border: none;
+  border-radius: 10px;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.btn:hover {
+  background-color: #ff0080;
+}
+
+.btn:focus-visible {
+  outline: 2px solid white;
+  outline-offset: -4px;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* features */
+input:read-only {
+  background-color: #e7e7e7;
+}
+#answer
+{background-color: #e7e7e7;}
+.dark-mode #answer{}
+
+.loader {
+  display: block;
+  margin: 0 auto;
+  /* Center the element horizontally */
+  border: 16px solid #f3f3f3;
+  border-top: 16px solid #3498db;
+  background-color: #ffffff;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.red {
+  --accent-color: #FF4136 !important;
+}
+
+.blue {
+  --accent-color: #0074D9 !important;
+}
+
+.black {
+  --accent-color: #111111 !important;
+  color: #FFFFFF !important;
+}
+
+.silver {
+  --accent-color: #CCCCCC !important;
+}
+
+.dark-mode {
+  background-color: #2f302f;
+}
+
+.dark-mode input {
+  color: #141414;
+}
+
+/* Inverted text color for dark mode */
+.dark-mode h1,
+.dark-mode label,
+.dark-mode p,
+.dark-mode button,
+.dark-mode .output {
+  color: #ffffff;
+  /* Inverted text color for dark mode */
+}
+
+/* Apply invert filter to images inside input group in dark mode */
+.dark-mode .invert-on-dark-mode {
+  filter: invert(1);
+}
+
+.dark-mode h1 {
+  transform: scale(1);
+  transition: transform 0.3s ease;
+}
+
+.dark-mode main,
+.dark-mode body {
+  background-color: #131314;
+}
+
+.dark-mode div {
+  background-color: #1b1b1b;
+}
+
+h1:hover {
+  transform: scale(1.1);
+}
+
+/* Optional styling for the typing text */
+#typing-text {
+  font-size: 24px;
+  line-height: 1.5;
+  caret-color: transparent;
+  /* Hide the text cursor */
+  font-family: 'Helvetica Neue';
+  /* Use monospace font */
+  display: inline-block;
+  /* Ensure the container only occupies the necessary width */
+  width: 400px;
+  /* Adjust the width as needed */
+  font-size: 24px;
+  font-weight: 900;
+  background: linear-gradient(to right, #ff0080, #8000ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: move 1s linear infinite;
+  background-size: 200% auto;
+  /* Ensure the background size is defined */
+}
+
+@keyframes move {
+  0% {
+    background-position: 0 0;
+    /* Start position */
+  }
+
+  100% {
+    background-position: 100% 0;
+    /* End position */
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translatey(0px);
+  }
+
+  50% {
+    transform: translatey(-20px);
+  }
+
+  100% {
+    transform: translatey(0px);
+  }
+}
+
+#dark-mode-toggle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: block;
+  margin: 0 auto;
+  transition: transform 0.3s linear;
+  /* Adjust transition timing */
+}
+
+.rotate {
+  transform: rotateY(180deg);
+  /* Rotate vertically */
+}
+
+.image-float {
+  animation: float 3s ease-in-out infinite;
+  /* Add your image below */
+  background-image: url('path-to-your-image.jpg');
+  background-size: cover;
+  width: 500px;
+  /* or the width of your image */
+  height: 500px;
+  /* or the height of your image */
+  border-radius: 50px;
+  /* optional, for rounded corners */
 }
