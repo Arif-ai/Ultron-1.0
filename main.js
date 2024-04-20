@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     copy.addEventListener('click', function() {
       // Select the text field
-      output.select();
+      answer.select();
       output.setSelectionRange(0, 99999); // For mobile devices
     
        // Copy the text inside the text field
