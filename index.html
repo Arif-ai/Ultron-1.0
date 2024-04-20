@@ -20,7 +20,10 @@
       </div>
       <div class="prompt-box">
         <input name="prompt" placeholder="Enter instructions here" type="text" value="Provide a recipe for the baked goods in the image">
-        <button type="submit">Go</button>
+        <button id="Go" type="submit">Go</button>
+        <button id="edit" name='edit' type="button" hidden>Edit</button>
+        <button id="copy" name='copy' type="button" >Copy to Clipboard</button>
+        <button id="regenerate" name='regenerate' type="button" hidden>Regenerate Answer</button>
       </div>
     </form>
     <p class="output">(Results will appear here)</p>
@@ -29,6 +32,7 @@
       <label for="extraIngredients">Add more ingredients:</label>
       <input type="text" id="extraIngredients" placeholder="e.g., cinnamon, nutmeg">
       <button id="updateButton">Update Recipe</button>
+
     </div>
   </main>
   <script type="module" src="/main.js"></script>

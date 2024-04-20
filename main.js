@@ -14,6 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const extraIngredientsInput = document.getElementById('extraIngredients');
     const imageUpload = document.getElementById('imageUpload');
     const cameraInput = document.getElementById('cameraInput');
+    //afif
+    const edit = document.querySelector('button[name="edit"]');
+    const regenerate = document.querySelector('button[name="regenerate"]');
+    const submit = document.querySelector('button[name="submit"]');
+    const answer = document.querySelector('input[name="answer"]');
+    const copy = document.querySelector('button[name="copy"]');
   
     async function callWithRetry(apiFunction, maxAttempts = 3) {
       let attempts = 0;
@@ -30,8 +36,39 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
     }
+
+    edit.addEventListener('click', function() {
+      if (answer.hasAttribute('readonly')) {
+        answer.removeAttribute('readonly')
+      } else {
+        answer.setAttribute('readonly', 'readonly');
+      }
+    })
   
+    regenerate.addEventListener('click', function() {
+      answer.value = '(Results will appear here)';
+      answer.setAttribute('readonly', 'readonly');
+      edit.setAttribute('hidden', 'hidden');
+      regenerate.setAttribute('hidden', 'hidden');
+      copy.setAttribute('hidden', 'hidden');
+      submit.removeAttribute('hidden');
     
+    })
+
+    copy.addEventListener('click', function() {
+      // Select the text field
+      output.select();
+      output.setSelectionRange(0, 99999); // For mobile devices
+    
+       // Copy the text inside the text field
+      navigator.clipboard.writeText(output.textContent);
+    
+      // Alert the copied text
+      alert("Copied the text: " + output.textContent);
+   })
+   
+   
+
     const updateButton = document.getElementById('updateButton');
     updateButton.addEventListener('click', updateRecipe);
   
@@ -47,6 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const file = imageUpload.files[0] || cameraInput.files[0];
       if (file) {
         handleSubmit(file, true);
+
       }
     }
   
@@ -85,12 +123,22 @@ document.addEventListener('DOMContentLoaded', () => {
             }
           });
         };
-  
+         //UNHIDE BUTTONS
+        edit.style.display = 'block';
+        regenerate.style.display = 'block';
+        copy.style.display = 'block';
+
+        //HIDE BUTTONS
+        submit.style.display = 'none';
         reader.readAsDataURL(file);
+    
+      
       } catch (e) {
         console.error("Error:", e);
         output.textContent = 'Error: ' + e.message;
       }
+
+
     }
   
     form.onsubmit = (ev) => {
