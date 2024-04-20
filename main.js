@@ -5,13 +5,15 @@ import { maybeShowApiKeyBanner } from './gemini-api-banner';
 import './style.css';
 
 document.addEventListener('DOMContentLoaded', () => {
-  let API_KEY = 'AIzaSyAUlM3kUC3bQL8L3bwgbzMml8_APTngihE';
+  const API_KEY = 'AIzaSyAUlM3kUC3bQL8L3bwgbzMml8_APTngihE'; // Your API key
 
-  let form = document.getElementById('imageForm');
-  let promptInput = document.querySelector('input[name="prompt"]');
-  let output = document.querySelector('.output');
-  let imageUpload = document.getElementById('imageUpload');
-  let cameraInput = document.getElementById('cameraInput');
+  const form = document.getElementById('imageForm');
+  const promptInput = document.querySelector('input[name="prompt"]');
+  const output = document.querySelector('.output');
+  const extraIngredientsDiv = document.getElementById('extraIngredientsDiv');
+  const extraIngredientsInput = document.getElementById('extraIngredients');
+  const imageUpload = document.getElementById('imageUpload');
+  const cameraInput = document.getElementById('cameraInput');
   const loader = document.getElementById('loader');
   const notfound = document.getElementById('notfound');
   const startgenerate = document.getElementById('startgenerate');
@@ -22,7 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const submit = document.querySelector('button[name="submit"]');
   const answer = document.querySelector('input[name="answer"]');
   const copy = document.querySelector('button[name="copy"]');
-  const extraIngredientsDiv = document.getElementById('extraIngredientsDiv');
 
   edit.addEventListener('click', function () {
     if (answer.hasAttribute('readonly')) {
@@ -135,7 +136,6 @@ document.addEventListener('DOMContentLoaded', () => {
     darkModeToggle.classList.toggle('rotate'); // Toggle rotate class
   });
 
-
   const typingText = document.getElementById('typing-text');
   const prefix = "Hello!\n"; // Define the fixed prefix with a newline
   const suffix = "How can I help you today?"; // Define the dynamic suffix
@@ -181,4 +181,37 @@ document.addEventListener('DOMContentLoaded', () => {
   cameraInput.addEventListener('change', () => {
     uploadedImage.style.display = 'none'; // Hide uploaded image when camera input is used
   });
+
+  // Existing functions...
+  async function updateRecipe() {
+    const extraIngredients = extraIngredientsInput.value;
+    if (!extraIngredients) {
+      alert("Please enter additional ingredients.");
+      return;
+    }
+    // Append extra ingredients to the prompt and re-submit to AI
+    promptInput.value += `, ${extraIngredients}`;
+    const file = imageUpload.files[0] || cameraInput.files[0];
+    if (file) {
+      handleSubmit(file, true);
+    }
+  }
+
+  const updateButton = document.getElementById('updateButton');
+  updateButton.addEventListener('click', updateRecipe);
+
+  async function callWithRetry(apiFunction, maxAttempts = 3) {
+    let attempts = 0;
+    while (attempts < maxAttempts) {
+      try {
+        return await apiFunction();
+      } catch (error) {
+        if (error.message.includes("Rpc timed out") && attempts < maxAttempts - 1) {
+          attempts++;
+        } else {
+          throw error;
+        }
+      }
+    }
+  }
 });
