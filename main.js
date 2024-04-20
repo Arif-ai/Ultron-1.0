@@ -19,24 +19,24 @@ document.addEventListener('DOMContentLoaded', () => {
   const startgenerate = document.getElementById('startgenerate');
   const uploadedImage = document.getElementById('uploadedImage'); // Added line
 
-  const edit = document.querySelector('button[name="edit"]');
+  //const edit = document.querySelector('button[name="edit"]');
   const regenerate = document.querySelector('button[name="regenerate"]');
   const submit = document.querySelector('button[name="submit"]');
   const answer = document.querySelector('input[name="answer"]');
   const copy = document.querySelector('button[name="copy"]');
 
-  edit.addEventListener('click', function () {
+  /*edit.addEventListener('click', function () {
     if (answer.hasAttribute('readonly')) {
       answer.removeAttribute('readonly')
     } else {
       answer.setAttribute('readonly', 'readonly');
     }
-  })
+  })*/
 
   copy.addEventListener('click', function () {
     var copyText = output.innerText;
     navigator.clipboard.writeText(copyText);
-    alert("Copied the text: " + copyText);
+    alert("Copied!");
   })
 
   regenerate.addEventListener('click', function () {
@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
       uploadedImage.style.display = 'none'; // Hide uploaded image when submitting new image
 
       handleSubmit(imageFile);
-      edit.removeAttribute('hidden');
+      //edit.removeAttribute('hidden');
       regenerate.removeAttribute('hidden');
       copy.removeAttribute('hidden');
       submit.setAttribute('hidden', 'hidden');
@@ -190,6 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
     // Append extra ingredients to the prompt and re-submit to AI
+    promptInput.value += "Include the following ingredients: ";
     promptInput.value += `, ${extraIngredients}`;
     const file = imageUpload.files[0] || cameraInput.files[0];
     if (file) {
